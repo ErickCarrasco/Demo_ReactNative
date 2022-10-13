@@ -28,10 +28,29 @@ const styles = StyleSheet.create({
     borderColor: '#55BCF6',
     borderWidth: 2,
     borderRadius: 5,
+    margin: 5,
   },
+  eliminationIcon: {
+    width: 12,
+    height: 12,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderRadius: 5,
+    margin: 5,
+  },
+  selectionArea: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  completedStyle: {
+    fontSize: 10,
+    color: 'green',
+    fontStyle: 'italic',
+  },    
 });
 
-const Task = ({done, task, completeTask}) => {
+const Task = ({done, task, completeTask, deleteTask}) => {
   console.log(done);
   console.log(task);
   return(
@@ -40,7 +59,17 @@ const Task = ({done, task, completeTask}) => {
       <Text style={styles.taskTextStyle}>
         {task}
       </Text>
-      <TouchableOpacity style={styles.circleIcon} onPress={completeTask} />
+      {done && 
+        <Text>
+          Done
+        </Text>
+      }
+      <View style={styles.selectionArea}>
+        {!done &&
+          <TouchableOpacity style={styles.circleIcon} onPress={completeTask} />
+        }
+        <TouchableOpacity style={styles.eliminationIcon} onPress={deleteTask} />
+      </View>
     </View>
   )
 }

@@ -8,11 +8,20 @@ export default function App() {
 
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskList([...taskList, task])
+    let taskValue = {name: task, completed: false};
+    setTaskList([...taskList, taskValue])
     setTask(null);
   }
 
   const completeTask = (index) => {
+    let itemsCopy = [...taskList];
+    let varTemp = {name: taskList[index].name, completed: true};
+    // console.log(varTemp);
+    itemsCopy.splice(index, 1, varTemp);
+    setTaskList(itemsCopy)
+  }
+
+  const deleteTask = (index) => {
     let itemsCopy = [...taskList];
     itemsCopy.splice(index, 1);
     setTaskList(itemsCopy)
@@ -35,8 +44,14 @@ export default function App() {
           <View style={styles.listItemSection}>
             {
               taskList.map((item, index) => {
+                console.log(item);
                 return(
-                  <Task task={item} done={'no'} completeTask={() => completeTask(index)} /> 
+                  <Task
+                    task={item.name}
+                    done={item.completed}
+                    completeTask={() => completeTask(index)} 
+                    deleteTask={() => deleteTask(index)}
+                  /> 
                 )
               })
             }
